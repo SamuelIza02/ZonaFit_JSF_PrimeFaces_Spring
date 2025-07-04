@@ -16,6 +16,7 @@ import java.util.Scanner;
  * Clase principal de la aplicación ZonaFit
  * Implementa CommandLineRunner para ejecutar código después del arranque de Spring
  * Proporciona una interfaz de consola para gestionar clientes del gimnasio
+ * Se usara Java Swing
  */
 @SpringBootApplication // Combina @Configuration, @EnableAutoConfiguration y @ComponentScan
 public class ZonaFitApplication implements CommandLineRunner {
