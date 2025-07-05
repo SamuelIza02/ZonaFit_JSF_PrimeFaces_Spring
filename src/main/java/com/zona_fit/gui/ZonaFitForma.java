@@ -1,5 +1,6 @@
 package com.zona_fit.gui;
 
+import com.zona_fit.modelo.Cliente;
 import com.zona_fit.servicio.ClienteServicio;
 import com.zona_fit.servicio.IClienteServicio;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,9 @@ public class ZonaFitForma extends JFrame{
     private JTextField nombreTexto;
     private JTextField apellidoTexto;
     private JTextField membresiaTexto;
+    private JButton guardarButton;
+    private JButton eliminarButton;
+    private JButton limpiarButton;
     IClienteServicio clienteServicio;
     private DefaultTableModel tablaModeloClientes;
 
@@ -22,6 +26,7 @@ public class ZonaFitForma extends JFrame{
     public ZonaFitForma(ClienteServicio clienteServicio){
         this.clienteServicio = clienteServicio;
         iniciarForma();
+        guardarButton.addActionListener(e -> guardarCliente());
     }
 
     private void iniciarForma(){
@@ -54,5 +59,42 @@ public class ZonaFitForma extends JFrame{
             };
             this.tablaModeloClientes.addRow(renglonCliente);
         });
+    }
+
+    private void guardarCliente(){
+        if (nombreTexto.getText().equals("")){
+            mostrarMensaje("Proporcione un nombre");
+            nombreTexto.requestFocusInWindow();
+            return;
+        }
+        if (membresiaTexto.getText().equals("")){
+            mostrarMensaje("Proporciona una membresia");
+            membresiaTexto.requestFocusInWindow();
+            return;
+        }
+        //Recuperamos los valores del formulario
+        var nombre = nombreTexto.getText();
+        var apellido = apellidoTexto.getText();
+        var membresia = Integer.parseInt(membresiaTexto.getText());
+        //Creamos el nuevo cliente
+        var cliente = new Cliente();
+        cliente.setNombre(nombre);
+        cliente.setApellido(apellido);
+        cliente.setMembresia(membresia);
+        //Guardamos el cliente
+        this.clienteServicio.guardarCliente(cliente);// inserta en la base de datos
+        mostrarMensaje("Cliente guardado con exito");
+        limpiarFormulario();
+        listarClientes();
+    }
+
+    private void mostrarMensaje(String mensaje){
+        JOptionPane.showMessageDialog(this, mensaje);
+    }
+
+    private void limpiarFormulario(){
+        nombreTexto.setText("");
+        apellidoTexto.setText("");
+        membresiaTexto.setText("");
     }
 }
