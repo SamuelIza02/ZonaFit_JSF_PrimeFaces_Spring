@@ -40,6 +40,7 @@ public class ZonaFitForma extends JFrame{
             }
         });
         eliminarButton.addActionListener(e -> eliminarCliente());
+        limpiarButton.addActionListener(e -> limpiarFormulario());
     }
 
     private void iniciarForma(){
@@ -52,7 +53,13 @@ public class ZonaFitForma extends JFrame{
 
     private void createUIComponents() {
         // TODO: place custom component creation code here
-        this.tablaModeloClientes = new DefaultTableModel(0, 4);
+        //this.tablaModeloClientes = new DefaultTableModel(0, 4);
+        this.tablaModeloClientes = new DefaultTableModel(0, 4){
+            @Override
+            public boolean isCellEditable(int row, int column){
+                return false;
+            }
+        };
         String[] cabeceros = {"ID", "Nombre", "Apellido", "Membresia"};
         this.tablaModeloClientes.setColumnIdentifiers(cabeceros);
         this.clientesTabla = new JTable(tablaModeloClientes);
