@@ -8,6 +8,8 @@ import org.springframework.stereotype.Component;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 @Component
 public class ZonaFitForma extends JFrame{
@@ -21,12 +23,20 @@ public class ZonaFitForma extends JFrame{
     private JButton limpiarButton;
     IClienteServicio clienteServicio;
     private DefaultTableModel tablaModeloClientes;
+    private Integer idCliente;
 
     @Autowired
     public ZonaFitForma(ClienteServicio clienteServicio){
         this.clienteServicio = clienteServicio;
         iniciarForma();
         guardarButton.addActionListener(e -> guardarCliente());
+        clientesTabla.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                cargarClienteSeleccionado();
+            }
+        });
     }
 
     private void iniciarForma(){
@@ -86,6 +96,21 @@ public class ZonaFitForma extends JFrame{
         mostrarMensaje("Cliente guardado con exito");
         limpiarFormulario();
         listarClientes();
+    }
+
+    private void cargarClienteSeleccionado(){
+        var renglon = clientesTabla.getSelectedRow();
+        if (renglon != -1){// -1 significa que no selecciono ningun registro
+            String id = clientesTabla.getValueAt(renglon, 0).toString();
+            this.idCliente = Integer.parseInt(id);
+            var nombre = clientesTabla.getValueAt(renglon, 1).toString();
+            this.nombreTexto.setText(nombre);
+            var apellido = clientesTabla.getValueAt(renglon, 2).toString();
+            this.apellidoTexto.setText(apellido);
+            var membresia = clientesTabla.getValueAt(renglon, 3).toString();
+            this.membresiaTexto.setText(membresia);
+
+        }
     }
 
     private void mostrarMensaje(String mensaje){
