@@ -18,7 +18,7 @@ import java.util.Scanner;
  * Proporciona una interfaz de consola para gestionar clientes del gimnasio
  * Se usara Java Swing
  */
-@SpringBootApplication // Combina @Configuration, @EnableAutoConfiguration y @ComponentScan
+//@SpringBootApplication // Combina @Configuration, @EnableAutoConfiguration y @ComponentScan
 public class ZonaFitApplication implements CommandLineRunner {
 
 	@Autowired // Inyección automática del servicio de clientes
