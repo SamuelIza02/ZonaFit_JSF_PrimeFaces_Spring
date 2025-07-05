@@ -87,13 +87,14 @@ public class ZonaFitForma extends JFrame{
         var apellido = apellidoTexto.getText();
         var membresia = Integer.parseInt(membresiaTexto.getText());
         //Creamos el nuevo cliente
-        var cliente = new Cliente();
-        cliente.setNombre(nombre);
-        cliente.setApellido(apellido);
-        cliente.setMembresia(membresia);
+        var cliente = new Cliente(this.idCliente, nombre, apellido, membresia);
         //Guardamos el cliente
-        this.clienteServicio.guardarCliente(cliente);// inserta en la base de datos
-        mostrarMensaje("Cliente guardado con exito");
+        this.clienteServicio.guardarCliente(cliente);// inserta / modificar en la base de datos
+        if (this.idCliente == null){
+            mostrarMensaje("Cliente guardado con exito");
+        }else {
+            mostrarMensaje("Se actualizo el Cliente");
+        }
         limpiarFormulario();
         listarClientes();
     }
@@ -121,5 +122,9 @@ public class ZonaFitForma extends JFrame{
         nombreTexto.setText("");
         apellidoTexto.setText("");
         membresiaTexto.setText("");
+        // Limpiamos id cliente seleccionado
+        this.idCliente = null;
+        // Deseleccionamos el registro seleccionado de la tabla
+        this.clientesTabla.getSelectionModel().clearSelection();
     }
 }
