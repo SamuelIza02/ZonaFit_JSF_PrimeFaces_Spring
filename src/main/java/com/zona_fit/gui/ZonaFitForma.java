@@ -35,5 +35,21 @@ public class ZonaFitForma extends JFrame{
         String[] cabeceros = {"ID", "Nombre", "Apellido", "Membresia"};
         this.tablaModeloClientes.setColumnIdentifiers(cabeceros);
         this.clientesTabla = new JTable(tablaModeloClientes);
+        //Cargar listado de clientes
+        listarClientes();
+    }
+
+    private void listarClientes(){
+        this.tablaModeloClientes.setRowCount(0);
+        var clientes = this.clienteServicio.listarClientes();
+        clientes.forEach(cliente -> {
+            Object[] renglonCliente = {
+                    cliente.getId(),
+                    cliente.getNombre(),
+                    cliente.getApellido(),
+                    cliente.getMembresia()
+            };
+            this.tablaModeloClientes.addRow(renglonCliente);
+        });
     }
 }
