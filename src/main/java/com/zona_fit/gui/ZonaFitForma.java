@@ -63,6 +63,8 @@ public class ZonaFitForma extends JFrame{
         String[] cabeceros = {"ID", "Nombre", "Apellido", "Membresia"};
         this.tablaModeloClientes.setColumnIdentifiers(cabeceros);
         this.clientesTabla = new JTable(tablaModeloClientes);
+        // Restringimos la seleccion de la tabla aa un solo registro
+        this.clientesTabla.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         //Cargar listado de clientes
         listarClientes();
     }
