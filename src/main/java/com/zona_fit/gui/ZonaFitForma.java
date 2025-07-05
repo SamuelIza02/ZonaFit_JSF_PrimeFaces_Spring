@@ -8,6 +8,8 @@ import org.springframework.stereotype.Component;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -37,6 +39,7 @@ public class ZonaFitForma extends JFrame{
                 cargarClienteSeleccionado();
             }
         });
+        eliminarButton.addActionListener(e -> eliminarCliente());
     }
 
     private void iniciarForma(){
@@ -114,6 +117,22 @@ public class ZonaFitForma extends JFrame{
         }
     }
 
+    private void eliminarCliente(){
+        var renglon = clientesTabla.getSelectedRow();
+        if (renglon != -1) {// -1 significa que no selecciono ningun registro
+            String id = clientesTabla.getValueAt(renglon, 0).toString();
+            this.idCliente = Integer.parseInt(id);
+            var cliente = new Cliente();
+            cliente.setId(this.idCliente);
+            clienteServicio.eliminarClientePorId(cliente);
+            mostrarMensaje("Cliente eliminado");
+            limpiarFormulario();
+            listarClientes();
+        }else {
+            mostrarMensaje("Selecciona un Cliente");
+        }
+    }
+
     private void mostrarMensaje(String mensaje){
         JOptionPane.showMessageDialog(this, mensaje);
     }
@@ -127,4 +146,6 @@ public class ZonaFitForma extends JFrame{
         // Deseleccionamos el registro seleccionado de la tabla
         this.clientesTabla.getSelectionModel().clearSelection();
     }
+
+
 }
