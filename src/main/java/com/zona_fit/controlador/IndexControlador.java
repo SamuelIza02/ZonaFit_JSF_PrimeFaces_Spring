@@ -49,8 +49,14 @@ public class IndexControlador {
             FacesContext.getCurrentInstance().addMessage(null,
                     new FacesMessage("Cliente Agregado"));
         }
+        // Modificar (update)
+        else {
+            this.clienteServicio.guardarCliente(this.clienteSeleccionado);
+            FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage("Cliente Actualizado"));
+        }
         // Ocultar la ventana modal
-        PrimeFaces.current().executeScript("PF('ventanaModalCliente'.hide())");
+        PrimeFaces.current().executeScript("PF('ventanaModalCliente').hide()");
         // Actualizar la tabla
         PrimeFaces.current().ajax().update("forma-clientes:mensajes",
                 "forma-clientes:clientes-tabla");
