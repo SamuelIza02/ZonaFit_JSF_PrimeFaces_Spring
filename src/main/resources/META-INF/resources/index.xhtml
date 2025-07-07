@@ -16,6 +16,11 @@
                         <p:menuitem value="Inicio" icon="pi pi-fw pi-user"
                                     update=":forma-clientes:clientes-tabla"
                                     actionListener="#{indexControlador.cargarDatos}"/>
+
+                        <p:menuitem value="Nuevo Cliente" icon="pi pi-fw pi-plus"
+                                    actionListener="#{indexControlador.agregarCliente}"
+                                    update=":forma-modal:cliente-ventana"
+                                    oncomplete="PF('ventanaModalCliente').show()"/>
                     </p:menubar>
                 </div>
                 <!--DataTable-->
@@ -29,6 +34,23 @@
                                 </div>
                             </div>
                         </f:facet>
+
+                        <p:column headerText="id">
+                            <h:outputText value="#{cliente.id}"/>
+                        </p:column>
+
+                        <p:column headerText="Nombre">
+                            <h:outputText value="#{cliente.nombre}"/>
+                        </p:column>
+
+                        <p:column headerText="Apellido">
+                            <h:outputText value="#{cliente.apellido}"/>
+                        </p:column>
+
+                        <p:column headerText="Membresia">
+                            <h:outputText value="#{cliente.membresia}"/>
+                        </p:column>
+
                     </p:dataTable>
                 </div>
             </h:form>
