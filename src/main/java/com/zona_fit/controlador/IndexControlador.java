@@ -63,4 +63,17 @@ public class IndexControlador {
         // Resetear el formulario
         this.clienteSeleccionado = null;
     }
+
+    public void eliminarCliente(){
+        logger.info("Cliente a eliminar: " + this.clienteSeleccionado);
+        this.clienteServicio.eliminarClientePorId(this.clienteSeleccionado);
+        // Eliminar el registro de la lista de clientes
+        this.clientes.remove(this.clienteSeleccionado);
+        // Reset del objeto seleccionado
+        this.clienteSeleccionado = null;
+        FacesContext.getCurrentInstance().addMessage(null,
+                new FacesMessage("Cliente Eliminado"));
+        PrimeFaces.current().ajax().update("forma-clientes:mensajes",
+                "forma-clientes:clientes-tabla");
+    }
 }
